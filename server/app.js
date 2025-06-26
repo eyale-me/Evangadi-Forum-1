@@ -82,7 +82,6 @@ app.use(globalErrorHandler);
 // Start server and test database connection
 async function startServer() {
   try {
-    await dbconnection.execute("SELECT 'test'");
     app.listen(process.env.PORT || 5400, () => {
       console.log(
         `Server is running on: http://localhost:${process.env.PORT || 5400}`
