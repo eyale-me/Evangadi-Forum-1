@@ -20,7 +20,7 @@ app.use(
       "http://localhost:4321",
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://evangadi-forum-beta7.vercel.app",
+      "https://evangadi-forum-1.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
