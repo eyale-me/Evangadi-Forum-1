@@ -64,7 +64,7 @@ INSERT INTO profile (user_id, first_name, last_name) VALUES
 (29, 'Dawit', 'Tefera'),
 (30, 'Elias', 'Negash');
 
--- QUESTIONS (Assuming user_id is 1-30, post_id is unique integer)
+-- QUESTIONS (Assuming user_id is 1-30)
 INSERT INTO question (question_uuid, question_title, question_description, tag, user_id) VALUES
 ('123e4567-e89b-12d3-a456-426614174000', 'How do I center a div in CSS?', 'I am struggling to center a div horizontally and vertically. What is the best way to do this in modern CSS?', 'css', 1),
 ('234e5678-e89b-12d3-a456-426614174001', 'What is the difference between let, var, and const in JavaScript?', 'Can someone explain the difference between let, var, and const with examples?', 'javascript', 2),
@@ -99,7 +99,7 @@ INSERT INTO question (question_uuid, question_title, question_description, tag, 
 
 -- ANSWERS (Assuming question_id refers to the auto-incremented PK of the question table, 1-30)
 INSERT INTO answer (answer, user_id, question_id) VALUES
-('You can center a div using flexbox: display: flex; justify-content: center; align-items: center;', 2, 1),
+('You can center a div using flexbox: display: flex; justify-content: center; align-items: center.', 2, 1),
 ('let and const are block scoped, var is function scoped. Use const for constants, let for variables that change.', 3, 2),
 ('Use the mysql2 package: npm install mysql2. Then use createConnection or createPool.', 4, 3),
 ('useEffect lets you run side effects in React components, like fetching data or updating the DOM.', 5, 4),
