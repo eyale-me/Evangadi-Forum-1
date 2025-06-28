@@ -115,17 +115,23 @@ exports.updateProfile = async (req, res) => {
  */
 exports.deleteProfile = async (req, res) => {
   try {
-    const { user_id } = req.params;
-    const result = await db.query(
-      "DELETE FROM registration WHERE user_id = $1",
-      [user_id]
+    const { user_uuid } = req.params;
+    const { rows: userRows } = await db.query(
+      "SELECT user_id FROM registration WHERE user_uuid = $1",
+      [user_uuid]
     );
 
-    if (result.rowCount === 0) {
+    if (userRows.length === 0) {
       return res
         .status(404)
         .json({ message: "User not found, nothing to delete." });
     }
+
+    const user_id = userRows[0].user_id;
+    const result = await db.query(
+      "DELETE FROM registration WHERE user_id = $1",
+      [user_id]
+    );
 
     res.status(200).json({ message: "Account deleted successfully" });
   } catch (err) {
