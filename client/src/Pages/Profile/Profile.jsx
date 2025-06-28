@@ -16,9 +16,10 @@ const ProfilePage = () => {
 
   const [profileData, setProfileData] = useState(null);
   const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
-    user_name: "",
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
   });
   const [initialForm, setInitialForm] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -37,10 +38,10 @@ const ProfilePage = () => {
       .get(`/profile/${user_uuid}`)
       .then((res) => {
         const fetchedData = {
-          first_name: res.data.first_name || "",
-          last_name: res.data.last_name || "",
-          user_name: res.data.user_name || "",
-          user_email: res.data.user_email || "",
+          firstname: res.data.first_name || "",
+          lastname: res.data.last_name || "",
+          username: res.data.user_name || "",
+          email: res.data.user_email || "",
           user_uuid: res.data.user_uuid,
         };
         setProfileData(fetchedData);
@@ -65,12 +66,26 @@ const ProfilePage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { data } = await api.put(`/profile/${user_uuid}`, form);
-      if (data.user) {
-        const newUserData = { ...userData, ...data.user };
-        setUserData(newUserData);
-        setInitialForm(form);
-      }
+      const { data } = await api.put(`/profile/${user_uuid}`, {
+        first_name: form.firstname,
+        last_name: form.lastname,
+        user_name: form.username,
+      });
+      const updatedUserData = {
+        ...userData,
+        firstname: form.firstname,
+        lastname: form.lastname,
+        username: form.username,
+        email: form.email,
+      };
+      setUserData(updatedUserData);
+      setProfileData((prev) => ({
+        ...prev,
+        firstname: form.firstname,
+        lastname: form.lastname,
+        username: form.username,
+      }));
+      setInitialForm(form);
       toast.success("Profile updated successfully!");
       setIsEditing(false);
     } catch (err) {
@@ -126,29 +141,29 @@ const ProfilePage = () => {
             <form onSubmit={handleUpdate} className={styles.editForm}>
               <h2>Edit Profile</h2>
               <div className={styles.inputGroup}>
-                <label htmlFor="user_name">Username</label>
+                <label htmlFor="username">Username</label>
                 <input
-                  id="user_name"
-                  name="user_name"
-                  value={form.user_name}
+                  id="username"
+                  name="username"
+                  value={form.username}
                   onChange={handleChange}
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label htmlFor="first_name">First Name</label>
+                <label htmlFor="firstname">First Name</label>
                 <input
-                  id="first_name"
-                  name="first_name"
-                  value={form.first_name}
+                  id="firstname"
+                  name="firstname"
+                  value={form.firstname}
                   onChange={handleChange}
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label htmlFor="last_name">Last Name</label>
+                <label htmlFor="lastname">Last Name</label>
                 <input
-                  id="last_name"
-                  name="last_name"
-                  value={form.last_name}
+                  id="lastname"
+                  name="lastname"
+                  value={form.lastname}
                   onChange={handleChange}
                 />
               </div>
@@ -180,11 +195,11 @@ const ProfilePage = () => {
                 className={styles.userIcon}
                 style={{ color: "#1e3a5f" }}
               />
-              <h2 className={styles.userName}>{profileData.user_name}</h2>
+              <h2 className={styles.userName}>{profileData.username}</h2>
               <p
                 className={styles.fullName}
-              >{`${profileData.first_name} ${profileData.last_name}`}</p>
-              <p className={styles.email}>{profileData.user_email}</p>
+              >{`${profileData.firstname} ${profileData.lastname}`}</p>
+              <p className={styles.email}>{profileData.email}</p>
               {userData?.user_uuid === user_uuid && (
                 <div className={styles.profileActions}>
                   <button
