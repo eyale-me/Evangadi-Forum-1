@@ -140,10 +140,10 @@ exports.updateProfile = async (req, res) => {
  */
 exports.deleteProfile = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const { user_uuid } = req.params;
     const result = await db.execute(
-      "DELETE FROM registration WHERE user_id = ?",
-      [user_id]
+      "DELETE FROM registration WHERE user_uuid = ?",
+      [user_uuid]
     );
 
     if (result.rowCount === 0) {
